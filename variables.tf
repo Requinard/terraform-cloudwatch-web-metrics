@@ -68,6 +68,12 @@ variable "tags" {
   default     = {}
 }
 
+variable "create_dashboard" {
+  default     = true
+  type        = bool
+  description = "If set to true, we will create a dashboard"
+}
+
 locals {
   metrics = {
     exception_occured = "ExceptionsOccurred"
