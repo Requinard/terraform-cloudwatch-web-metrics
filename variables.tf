@@ -10,8 +10,14 @@ variable "namespace" {
 
 variable "threshold_exceptions" {
   type        = number
-  description = "The percentage of errors that should trigger the alarm"
+  description = "The number of errors that should trigger the alarm"
   default     = 1
+}
+
+variable "threshold_status_codes" {
+  type        = number
+  description = "The amount of times an error is allowed to occur"
+  default     = 5
 }
 
 variable "pattern_exception" {
