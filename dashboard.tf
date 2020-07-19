@@ -8,9 +8,10 @@ resource "aws_cloudwatch_dashboard" "dashboard" {
         x: 0,
         y: 0,
         width: 12,
-        height: 6,
+        height: 12,
         properties: {
-          metrics: [
+          metrics: concat(
+          [
             [
               var.namespace,
               local.metrics.requests_total
@@ -20,6 +21,8 @@ resource "aws_cloudwatch_dashboard" "dashboard" {
               local.metrics.exception_occured
             ]
           ],
+          [for item in var.request_types: [var.namespace, "Requests${item}"]]
+          ),
           period: 60
           stat: "Sum"
           title: "Request Counts",
@@ -28,33 +31,12 @@ resource "aws_cloudwatch_dashboard" "dashboard" {
       },
       {
         type: "metric",
-        x: 0,
-        y: 6,
+        x: 12,
+        y: 0,
         width: 12,
-        height: 6,
+        height: 12,
         properties: {
-          metrics: [
-            [
-              var.namespace,
-              var.status_code_metrics.500
-            ],
-            [
-              var.namespace,
-              var.status_code_metrics.409
-            ],
-            [
-              var.namespace,
-              var.status_code_metrics.401
-            ],
-            [
-              var.namespace,
-              var.status_code_metrics.403
-            ],
-            [
-              var.namespace,
-              var.status_code_metrics.404
-            ]
-          ],
+          metrics:[for item in var.status_code_metrics: [var.namespace, item]],
           period: 60
           stat: "Sum"
           title: "Bad Status Codes",

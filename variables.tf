@@ -63,9 +63,13 @@ variable "status_code_metrics" {
   }
 }
 
+variable "request_types" {
+  type    = list(string)
+  default = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+}
+
 locals {
-  request_types = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-  metrics       = {
+  metrics = {
     exception_occured = "ExceptionsOccurred"
     requests_total    = "RequestsTotal"
     request_type      = "Requests"
