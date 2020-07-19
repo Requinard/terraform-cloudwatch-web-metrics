@@ -31,3 +31,4 @@ resource "aws_cloudwatch_metric_alarm" "status_codes" {
 
   # todo make this percentage of errors
 }
+

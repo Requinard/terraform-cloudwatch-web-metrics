@@ -3,6 +3,12 @@ variable "log_group_name" {
   description = "The name of an AWS Cloudwatch Log Group"
 }
 
+variable "dashboard_name" {
+  type        = string
+  description = "Name for the dashboard"
+  default     = "Dashboard"
+}
+
 variable "namespace" {
   type        = string
   description = "A account-unique identifier for this application and environment. (frontoffice/master, generic-es/dev)"
