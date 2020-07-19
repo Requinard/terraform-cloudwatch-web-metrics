@@ -7,7 +7,7 @@ resource "aws_cloudwatch_log_metric_filter" "request_method_counts" {
   pattern        = "${local.request_types[count.index]} -${var.health_endpoint}" # Exclude health endpoint
 
   metric_transformation {
-    name      = "${local.metric_request_type}${local.request_types[count.index]}"
+    name      = "${local.metrics.request_type}${local.request_types[count.index]}"
     namespace = var.namespace
     value     = "1"
   }
@@ -15,11 +15,11 @@ resource "aws_cloudwatch_log_metric_filter" "request_method_counts" {
 
 resource "aws_cloudwatch_log_metric_filter" "requests_total" {
   log_group_name = var.log_group_name
-  name           = local.metric_requests_total
+  name           = local.metrics.requests_total
   pattern        = "${join(" ", formatlist("?%s", local.request_types))} -${var.health_endpoint}"
 
   metric_transformation {
-    name      = local.metric_requests_total
+    name      = local.metrics.requests_total
     namespace = var.namespace
     value     = "1"
   }

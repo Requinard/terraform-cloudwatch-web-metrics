@@ -5,7 +5,7 @@ resource "aws_cloudwatch_log_metric_filter" "errors" {
   pattern        = var.pattern_exception
 
   metric_transformation {
-    name      = local.metric_exception_occured
+    name      = local.metrics.exception_occured
     namespace = var.namespace
     value     = "1"
   }
@@ -19,9 +19,11 @@ resource "aws_cloudwatch_metric_alarm" "errors" {
   evaluation_periods  = 2
   period              = var.period
   threshold           = var.threshold_exceptions
-  metric_name         = local.metric_exception_occured
+  metric_name         = local.metrics.exception_occured
   statistic           = "Average"
   namespace           = var.namespace
+
+  alarm_actions = var.alarm_actions
 
   #  TODO: This has been removed for the time being as I cannot yet get the metrics query to work
   #  metric_query {

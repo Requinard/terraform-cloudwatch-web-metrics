@@ -32,15 +32,30 @@ variable "health_endpoint" {
   default     = "health"
 }
 
-
 variable "alarm_actions" {
   type        = list(string)
   default     = []
   description = "A list of ARNs to execute in case of alarms"
 }
+
+variable "status_code_metrics" {
+  type        = map(string)
+  description = "Status codes and their maps"
+
+  default = {
+    401: "Status401NotAuthorized",
+    403: "Status403NotAuthenticated",
+    404: "Status404NotFound",
+    409: "Status409Conflict",
+    500: "Status500UncaughtInternalError"
+  }
+}
+
 locals {
-  request_types            = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-  metric_exception_occured = "ExceptionsOccurred"
-  metric_requests_total    = "RequestsTotal"
-  metric_request_type      = "Requests"
+  request_types = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+  metrics       = {
+    exception_occured = "ExceptionsOccurred"
+    requests_total    = "RequestsTotal"
+    request_type      = "Requests"
+  }
 }
