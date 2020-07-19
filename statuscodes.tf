@@ -27,7 +27,8 @@ resource "aws_cloudwatch_metric_alarm" "status_codes" {
   statistic           = "Average"
   threshold           = var.threshold_status_codes
 
-  alarm_actions = var.alarm_actions
+  treat_missing_data = "notBreaching"
+  alarm_actions      = var.alarm_actions
 
   # todo make this percentage of errors
 }

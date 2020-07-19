@@ -23,7 +23,8 @@ resource "aws_cloudwatch_metric_alarm" "errors" {
   statistic           = "Average"
   namespace           = var.namespace
 
-  alarm_actions = var.alarm_actions
+  treat_missing_data = "notBreaching"
+  alarm_actions      = var.alarm_actions
 
   #  TODO: This has been removed for the time being as I cannot yet get the metrics query to work
   #  metric_query {
