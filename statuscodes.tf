@@ -18,6 +18,7 @@ resource "aws_cloudwatch_metric_alarm" "status_codes" {
 
   alarm_name        = "${var.namespace}/${each.value}"
   alarm_description = "Monitors for status code ${each.key}"
+  tags = var.tags
 
   metric_name         = each.value
   namespace           = var.namespace

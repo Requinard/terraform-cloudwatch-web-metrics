@@ -62,6 +62,12 @@ variable "request_types" {
   default = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 }
 
+variable "tags" {
+  type        = map(string)
+  description = "AWS Resource tags"
+  default     = {}
+}
+
 locals {
   metrics = {
     exception_occured = "ExceptionsOccurred"

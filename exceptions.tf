@@ -14,14 +14,11 @@ resource "aws_cloudwatch_log_metric_filter" "errors" {
 resource "aws_cloudwatch_metric_alarm" "errors" {
   alarm_name        = "${var.namespace}/ErrorOccurred"
   alarm_description = "Monitors the exceptions occurring in this log group"
+  tags              = var.tags
 
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 2
-  period              = var.period
   threshold           = var.threshold_exceptions
-  metric_name         = local.metrics.exception_occured
-  statistic           = "Average"
-  namespace           = var.namespace
 
   treat_missing_data = "notBreaching"
   alarm_actions      = var.alarm_actions
