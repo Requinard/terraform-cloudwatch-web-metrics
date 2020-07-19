@@ -10,28 +10,13 @@ resource "aws_cloudwatch_dashboard" "dashboard" {
         width: 12,
         height: 9,
         properties: {
-          metrics: concat(
-          [
-            [
-              var.namespace,
-              local.metrics.requests_total
-            ],
-            [
-              var.namespace,
-              local.metrics.exception_occured
-            ]
-          ],
-          [for item in var.request_types: [var.namespace, "Requests${item}"]]
-          ),
+          metrics: [for item in var.request_types: [var.namespace, "Requests${item}"]],
           period: 60
           stat: "Sum"
           title: "Requests by type",
           region: "eu-central-1",
-          stacked: true,
-          legend: {
-            position: "right"
-          }
-        }
+          stacked: true
+        }g
       },
       {
         type: "metric",
@@ -45,17 +30,37 @@ resource "aws_cloudwatch_dashboard" "dashboard" {
           stat: "Sum"
           title: "Bad Status Codes",
           region: "eu-central-1",
-          stacked: true,
-          legend: {
-            position: "right"
-          }
+          stacked: true
         }
       },
       {
         type: "metric",
         x: 0,
         y: 9,
-        width: 24,
+        width: 12,
+        height: 6,
+        properties: {
+          metrics:[
+            [
+              var.namespace,
+              local.metrics.requests_total
+            ]
+          ],
+          period: 60
+          stat: "Sum"
+          title: "Total Requests",
+          region: "eu-central-1",
+          stacked: true,
+          legend: {
+            position: "hidden"
+          }
+        }
+      },
+      {
+        type: "metric",
+        x: 12,
+        y: 9,
+        width: 12,
         height: 6,
         properties: {
           metrics:[
@@ -70,7 +75,7 @@ resource "aws_cloudwatch_dashboard" "dashboard" {
           region: "eu-central-1",
           stacked: true,
           legend: {
-            position: "right"
+            position: "hidden"
           }
         }
       },
