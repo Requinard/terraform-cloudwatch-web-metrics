@@ -15,6 +15,10 @@ resource "aws_cloudwatch_dashboard" "dashboard" {
             [
               var.namespace,
               local.metrics.requests_total
+            ],
+            [
+              var.namespace,
+              local.metrics.exception_occured
             ]
           ],
           [for item in var.request_types: [var.namespace, "Requests${item}"]]
@@ -22,7 +26,11 @@ resource "aws_cloudwatch_dashboard" "dashboard" {
           period: 60
           stat: "Sum"
           title: "Requests by type",
-          region: "eu-central-1"
+          region: "eu-central-1",
+          stacked: true,
+          legend: {
+            position: "right"
+          }
         }
       },
       {
@@ -36,7 +44,11 @@ resource "aws_cloudwatch_dashboard" "dashboard" {
           period: 60
           stat: "Sum"
           title: "Bad Status Codes",
-          region: "eu-central-1"
+          region: "eu-central-1",
+          stacked: true,
+          legend: {
+            position: "right"
+          }
         }
       },
       {
@@ -49,17 +61,17 @@ resource "aws_cloudwatch_dashboard" "dashboard" {
           metrics:[
             [
               var.namespace,
-              local.metrics.requests_total
-            ],
-            [
-              var.namespace,
               local.metrics.exception_occured
             ]
           ],
           period: 60
           stat: "Sum"
-          title: "Request counts and exceptions",
-          region: "eu-central-1"
+          title: "Unhandled Exceptions",
+          region: "eu-central-1",
+          stacked: true,
+          legend: {
+            position: "right"
+          }
         }
       },
     ]

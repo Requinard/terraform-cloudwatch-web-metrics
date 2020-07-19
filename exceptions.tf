@@ -18,7 +18,12 @@ resource "aws_cloudwatch_metric_alarm" "errors" {
 
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 2
+  period              = var.period
   threshold           = var.threshold_exceptions
+  metric_name         = local.metrics.exception_occured
+  statistic           = "Average"
+  namespace           = var.namespace
+
 
   treat_missing_data = "notBreaching"
   alarm_actions      = var.alarm_actions
